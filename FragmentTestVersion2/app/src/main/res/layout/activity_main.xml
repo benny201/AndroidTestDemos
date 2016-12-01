@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.benny.fragmenttestversion2.MainActivity">
+
+    <fragment
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:name="com.example.benny."
+        android:id="@+id/leftfrag" />
+    <FrameLayout
+        android:id="@+id/RightFragmentLayout"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+        <fragment
+            android:id="@+id/rigtfrag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.example.benny.fragmenttest.RightFragment"/>
+    </FrameLayout>
+</LinearLayout>
