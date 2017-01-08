@@ -13,18 +13,12 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     private Context context;
 
 
-    //SQL
+    //SQL statement
     private static final String Create_book = "Create table Book("
                                                 + "id integer primary key autoincrement,"
                                                 + "author text,"
                                                 + "pages integer,"
                                                 + "name text)";
-
-    private static final String Create_category = "Create table Category("
-                                                + "id integer primary key autoincrement,"
-                                                + "name text"
-                                                + "code integer)";
-
 
 
     public MyDataBaseHelper(Context mContext, String name, SQLiteDatabase.CursorFactory cursor, int version) {
