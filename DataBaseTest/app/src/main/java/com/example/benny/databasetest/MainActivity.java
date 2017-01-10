@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SQLiteDatabase db = myDataBaseHelper.getWritableDatabase();
-                db.delete("Book", "pages > ?", new String[]{"500"});
+                db.delete("Book", "pages > ?", new String[]{"1"});
             }
         });
 
