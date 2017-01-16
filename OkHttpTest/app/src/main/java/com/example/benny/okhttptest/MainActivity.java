@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xmlpull.v1.XmlPullParser;
@@ -50,13 +52,14 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     OkHttpClient okHttpClient = new OkHttpClient();
                     Request request = new Request.Builder()
-                            .url("http://10.0.2.2:8000/get_data.xml")
+                            .url("http://10.0.2.2:8000/get_data.json")
                             .build();
                     Response response = okHttpClient.newCall(request).execute();
                     String responseRes = response.body().string();
                     //ShowRes(responseRes);
                     //parseXMLWithPull(responseRes);
-                    parseXMLWithSAX(responseRes);
+                    //parseXMLWithSAX(responseRes);
+                    parseJSONwithJSONObejct(responseRes);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -121,6 +124,24 @@ public class MainActivity extends AppCompatActivity {
             xmlReader.setContentHandler(contentHandler);
             xmlReader.parse(new InputSource(new StringReader(xmlData)));
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //JSONObject
+    private void parseJSONwithJSONObejct(String JsonData) {
+        try {
+            JSONArray jsonArray = new JSONArray(JsonData);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String id = jsonObject.getString("id");
+                String name = jsonObject.getString("name");
+                String version = jsonObject.getString("version");
+                Log.d(TAG, "id:" + id);
+                Log.d(TAG, "name: " + name);
+                Log.d(TAG, "version: " + version);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
