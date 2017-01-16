@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xml.sax.InputSource;
@@ -16,6 +19,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.List;
 
 import javax.xml.parsers.SAXParserFactory;
 
@@ -59,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
                     //ShowRes(responseRes);
                     //parseXMLWithPull(responseRes);
                     //parseXMLWithSAX(responseRes);
-                    parseJSONwithJSONObejct(responseRes);
+                    //parseJSONwithJSONObejct(responseRes);
+                    parseJSONwithGson(responseRes);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -146,4 +151,16 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    //Gson
+    private void parseJSONwithGson(String JsonData) {
+        Gson gson = new Gson();
+        List<APP> list = gson.fromJson(JsonData, new TypeToken<List<APP>>(){}.getType());
+        for (APP app : list) {
+            Log.d(TAG, "id: " + app.getId());
+            Log.d(TAG, "name: " + app.getName());
+            Log.d(TAG, "version: " + app.getVersion());
+        }
+    }
+
 }
