@@ -7,11 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
+
+import javax.xml.parsers.SAXParserFactory;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -37,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    // communicate with OkHttp
     private void sendRequestWithOkHttp() {
         new Thread(new Runnable() {
             @Override
@@ -49,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
                     Response response = okHttpClient.newCall(request).execute();
                     String responseRes = response.body().string();
                     //ShowRes(responseRes);
-                    parseXMLWithPull(responseRes);
+                    //parseXMLWithPull(responseRes);
+                    parseXMLWithSAX(responseRes);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -66,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //parse XML with PULL method
     private void parseXMLWithPull(String xmlData) {
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -99,6 +107,20 @@ public class MainActivity extends AppCompatActivity {
                 }
                 eventType = xmlPullParser.next();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //parse with SAX method
+    private void parseXMLWithSAX(String xmlData) {
+        try {
+            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+            XMLReader xmlReader = saxParserFactory.newSAXParser().getXMLReader();
+            ContentHandler contentHandler = new ContentHandler();
+            xmlReader.setContentHandler(contentHandler);
+            xmlReader.parse(new InputSource(new StringReader(xmlData)));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
