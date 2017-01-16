@@ -23,6 +23,7 @@ import java.util.List;
 
 import javax.xml.parsers.SAXParserFactory;
 
+import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -42,7 +43,19 @@ public class MainActivity extends AppCompatActivity {
         SendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendRequestWithOkHttp();
+                //sendRequestWithOkHttp();
+                HttpUtil.sendOkHttpRequest("http://10.0.2.2:8000/get_data.json", new okhttp3.Callback() {
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String Result = response.body().string();
+                        parseJSONwithGson(Result);
+                    }
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+                });
             }
         });
     }
